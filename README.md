@@ -119,3 +119,8 @@ git clone git@github.com:BU-Spark/se-naacp.git
 
 - open directories web-app and web-api using IDE (Visual Studio Code) separately
 - follow instructions in README files
+- to fix err_ossl_evp_unsupported error run (also can add in start and build in package.json)
+
+```
+export NODE_OPTIONS=--openssl-legacy-provider
+```
