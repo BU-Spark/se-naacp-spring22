@@ -39,6 +39,14 @@ export default function Home() {
   return (
     <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-16 pt-8 pb-32 py-8">
       <h3 className="text-2xl text-hint-nav">WGBH Dashboard</h3>
+
+
+      <label for="fromDate">From:</label>
+      <input type="date" id="fromDate" name="fromDate" />
+      <label for="toDate">To:</label>
+      <input type="date" id="toDate" name="toDate" />
+      <input type="submit" />
+
       <div className="grid grid-cols-1 md:gap-12 lg:gap-4 xl:gap-16 md:grid-cols-2 lg:grid-cols-4 mt-8">
         {neighbors.length > 0 && (
           <>
@@ -46,13 +54,21 @@ export default function Home() {
               <NbList
                 key={neighbor._id}
                 id={neighbor._id}
-                title={neighbor.title}
+                nbname={neighbor.nbname}
                 onChooseNeighbor={handleChooseNeighbor}
               />
             ))}
           </>
         )}
       </div>
+
+      <ul>
+        <li><a href="default.asp">Home</a></li>
+        <li><a href="news.asp">News</a></li>
+        <li><a href="contact.asp">Contact</a></li>
+        <li><a href="about.asp">About</a></li>
+      </ul>
+
     </div>
   );
 }

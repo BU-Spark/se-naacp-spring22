@@ -17,7 +17,7 @@ const { Neighbor } = models;
 
 type NeighborQuery = {
     createdBy: string;
-    title?: RegExp;
+    nbname?: RegExp;
 };
 
 class AuthController {
@@ -32,7 +32,7 @@ class AuthController {
         if (req.query.q) {
             const searchQuery = escapeRegex(req.query.q.toString());
             logger.info(`Getting Neighbors with query (${searchQuery})`);
-            query = { ...query, title: new RegExp(searchQuery, 'gi') };
+            query = { ...query, nbname: new RegExp(searchQuery, 'gi') };
         }
 
         const neighborsPromise = Neighbor.find(query).sort({ createdAt: 1 }).skip(offset).limit(limit);
@@ -41,44 +41,6 @@ class AuthController {
         logger.info('neighbors fetched successfully');
         const metaData = paginate(count, limit, offset);
         return sendJSONResponse(res, 200, { neighbors, metaData }, 'neighbors retrieved successfully');
-    }
-
-    static async createNeighbor(req: Request, res: Response) {
-        const { title, content, documentUrl } = req.body;
-        const currentUser = req.user!;
-        logger.info(`attempting to create neighbor with title ${title}`);
-
-        let slug = slugify(title);
-
-        // TODO: swtich to pub sub model to extract text and generate topics
-        const parsedContentPromise = downloadFile(documentUrl);
-        const exisitngNeighborsPromise = Neighbor.find({ slug: new RegExp(slug, 'gi') }).sort({ createdAt: -1 });
-        const [exisitngNeighbors, parsedContent] = await Promise.all([exisitngNeighborsPromise, parsedContentPromise]);
-
-        if (exisitngNeighbors.length > 0) {
-            slug = `${slug}-${exisitngNeighbors.length + 1}`;
-        }
-
-        const neighbor = new Neighbor({
-            title,
-            slug,
-            content: parsedContent || content,
-            documentUrl,
-            createdBy: currentUser.userId,
-        });
-
-        const createdNeighbor = await neighbor.save();
-
-        logger.info(`Neighbor ${title} created successfully`);
-
-        return sendJSONResponse(
-            res,
-            201,
-            {
-                neighbor: createdNeighbor,
-            },
-            'neighbor created successfully',
-        );
     }
 
     static async getNeighbor(req: Request, res: Response) {
@@ -98,21 +60,6 @@ class AuthController {
         }
 
         return sendJSONResponse(res, 200, { neighbor }, 'neighbor retrieved successfully');
-    }
-
-    static async deleteNeighbor(req: Request, res: Response) {
-        logger.info('attempting to delete neighbor');
-        const currentUser = req.user!;
-        const { id: neighborId } = req.params;
-        const neighbor = await Neighbor.findById(neighborId);
-        if (!neighbor) {
-            logger.warn(`Error getting neighbor with id (${neighborId})`);
-            return sendJSONResponse(res, 404, {}, 'neighbor not found.');
-        }
-        await neighbor.remove();
-
-        logger.info(`neighbor ${neighbor.title} deleted by ${currentUser.email} successfully`);
-        return sendJSONResponse(res, 204, {}, 'neighbor deleted successfully');
     }
 }
 

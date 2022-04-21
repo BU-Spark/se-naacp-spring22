@@ -2,6 +2,7 @@ import express from 'express';
 
 import authenticationRoutes from './authentication.route';
 import articlesRoutes from './articles.route';
+import neighborsRoutes from './neighbors.route';
 import usersRoutes from './user.route';
 import uploadRoutes from './upload.route';
 
@@ -18,6 +19,7 @@ router.get('/status', (req, res) => res.send('API Active'));
 
 router.use('/auth', authenticationRoutes);
 router.use('/articles', articlesRoutes);
+router.use('/neighbors', neighborsRoutes);
 router.use('/users', usersRoutes);
 router.use('/upload', uploadRoutes);
 
