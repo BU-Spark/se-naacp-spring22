@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { useRouter } from 'next/router';
 
 import HomeIcon from '../icons/Home';
+import UploadIcon from '../icons/Upload';
+import ArticlesIcon from '../icons/Articles';
 import CompareIcon from '../icons/Compare';
 import DatabaseIcon from '../icons/Database';
 import LogOutIcon from '../icons/LogOut';
@@ -21,7 +23,7 @@ export default function SideNav() {
         router.push('/');
         signOut();
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   return (
@@ -35,6 +37,16 @@ export default function SideNav() {
           </li>
           {isSignedIn && (
             <>
+              <li>
+                <SideNavItem title="Articles" link="/articles" isActive={router.asPath.startsWith('/articles')}>
+                  <ArticlesIcon isActive={router.asPath.startsWith('/articles')} />
+                </SideNavItem>
+              </li>
+              <li>
+                <SideNavItem title="Upload" link="/upload" isActive={router.asPath.startsWith('/upload')}>
+                  <UploadIcon isActive={router.asPath.startsWith('/upload')} />
+                </SideNavItem>
+              </li>
               <li>
                 <SideNavItem title="Compare" link="/compare" isActive={router.asPath.startsWith('/compare')}>
                   <CompareIcon isActive={router.asPath.startsWith('/compare')} />
