@@ -2,11 +2,17 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import neighborService from '../../services/neighborService';
 import NbList from '../secondary/NbList';
+import NbButton from '../secondary/NbButton';
+
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Box from '@mui/material/Box';
 
 export default function Home() {
   const [apiLoading, setApiLoading] = useState(false);
   const [neighbors, setNeighbors] = useState([]);
   const [subneighbors, setSubNeighbors] = useState([]);
+
 
   const router = useRouter();
   const { query } = router;
@@ -47,27 +53,34 @@ export default function Home() {
       <input type="date" id="toDate" name="toDate" />
       <input type="submit" />
 
-      <div className="grid grid-cols-1 md:gap-12 lg:gap-4 xl:gap-16 md:grid-cols-2 lg:grid-cols-4 mt-8">
-        {neighbors.length > 0 && (
-          <>
-            {neighbors.map((neighbor) => (
-              <NbList
-                key={neighbor._id}
-                id={neighbor._id}
-                nbname={neighbor.nbname}
-                onChooseNeighbor={handleChooseNeighbor}
-              />
-            ))}
-          </>
-        )}
-      </div>
 
-      <ul>
-        <li><a href="default.asp">Home</a></li>
-        <li><a href="news.asp">News</a></li>
-        <li><a href="contact.asp">Contact</a></li>
-        <li><a href="about.asp">About</a></li>
-      </ul>
+      <Box
+        sx={{
+          display: 'flex',
+          '& > *': {
+            m: 1,
+          },
+        }}
+      >
+        <ButtonGroup
+          orientation="vertical"
+          aria-label="vertical contained button group"
+          variant="contained"
+        >
+          {neighbors.length > 0 && (
+            <>
+              {neighbors.map((neighbor) => (
+                <NbButton
+                  key={neighbor._id}
+                  id={neighbor._id}
+                  nbname={neighbor.nbname}
+                  onChooseNeighbor={handleChooseNeighbor}
+                />
+              ))}
+            </>
+          )}
+        </ButtonGroup>
+      </Box>
 
     </div>
   );
