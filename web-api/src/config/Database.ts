@@ -3,6 +3,7 @@ import mongoose, { Model, Connection } from 'mongoose';
 import { IUserDocument, User } from '../models/User';
 import { IArticleDocument, Article } from '../models/Article';
 import { INeighborDocument, Neighbor } from '../models/Neighbor';
+import { ISubNeighborDocument, SubNeighbor } from '../models/SubNeighbor';
 
 import config from './environments';
 import logger from './logger';
@@ -11,12 +12,14 @@ export interface IDatabase {
   User: Model<IUserDocument>;
   Article: Model<IArticleDocument>;
   Neighbor: Model<INeighborDocument>;
+  SubNeighbor: Model<ISubNeighborDocument>;
 }
 
 export const models: IDatabase = {
   User,
   Article,
   Neighbor,
+  SubNeighbor,
 };
 
 export const connectToDB = (databaseURI: string): Connection => {
