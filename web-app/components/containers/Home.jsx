@@ -4,6 +4,8 @@ import neighborService from '../../services/neighborService';
 import NbList from '../secondary/NbList';
 import NbButton from '../secondary/NbButton';
 
+import MaterialUIPickers from '../primary/MaterialUIPickers';
+
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
@@ -12,7 +14,6 @@ export default function Home() {
   const [apiLoading, setApiLoading] = useState(false);
   const [neighbors, setNeighbors] = useState([]);
   const [subneighbors, setSubNeighbors] = useState([]);
-
 
   const router = useRouter();
   const { query } = router;
@@ -42,18 +43,16 @@ export default function Home() {
     }
   };
 
+
   return (
     <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-16 pt-8 pb-32 py-8">
       <h3 className="text-2xl text-hint-nav">WGBH Dashboard</h3>
 
+      <MaterialUIPickers label="From" />
+      <MaterialUIPickers label="To" />
+      <Button variant="contained">Search</Button>
 
-      <label for="fromDate">From:</label>
-      <input type="date" id="fromDate" name="fromDate" />
-      <label for="toDate">To:</label>
-      <input type="date" id="toDate" name="toDate" />
-      <input type="submit" />
-
-
+      <h3>Top Neighborhoods Covered</h3>
       <Box
         sx={{
           display: 'flex',
