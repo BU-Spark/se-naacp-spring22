@@ -2,6 +2,8 @@ import React from 'react';
 
 import MaterialUIPickers from '../primary/MaterialUIPickers';
 import EnhancedTable from '../primary/StickyHeadTable';
+import PieChartRace from '../primary/PieChartRace';
+import PieChartGender from '../primary/PieChartGender';
 
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -98,9 +100,33 @@ export default function Landing() {
               </Item>
             </Grid>
           </Grid>
+
+          <Grid container spacing={3}>
+            <Grid item xs>
+              <Item>
+                <h1>Map</h1>
+              </Item>
+            </Grid>
+            <Grid item xs>
+              <Item>
+                <h1>Ranking of Topics Tagged this Week</h1>
+              </Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Item>
+                <div className="h-3 w-3 inline">
+                  <PieChartRace />
+                </div>
+                <div className="h-3 w-3 inline">
+                  <PieChartGender />
+                </div>
+              </Item>
+            </Grid>
+          </Grid>
         </Box>
 
       </div>
+
 
 
 
