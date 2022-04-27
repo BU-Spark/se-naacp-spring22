@@ -48,9 +48,12 @@ export default function Home() {
     <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-16 pt-8 pb-32 py-8">
       <h3 className="text-2xl text-hint-nav">WGBH Dashboard</h3>
 
-      <MaterialUIPickers label="From" />
-      <MaterialUIPickers label="To" />
-      <Button variant="contained">Search</Button>
+      <div className="absolute right-0">
+        <MaterialUIPickers label="From" className="mx-2.5" />
+        <MaterialUIPickers label="To" />
+        <Button variant="contained" className="m-10">Search</Button>
+      </div>
+
 
       <h3>Top Neighborhoods Covered</h3>
       <Box
