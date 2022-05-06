@@ -1,9 +1,4 @@
-import { useRouter } from 'next/router';
-import React, { useState, useEffect } from 'react';
-import neighborService from '../../services/neighborService';
-import subNeighborService from '../../services/subNeighborService';
-import NbButton from '../secondary/NbButton';
-import SubNbButton from '../secondary/SubNbButton';
+import React from 'react';
 
 import MaterialUIPickers from '../primary/MaterialUIPickers';
 import EnhancedTable from '../primary/StickyHeadTable';
@@ -32,64 +27,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function Home() {
-  const [apiLoading, setApiLoading] = useState(false);
-  const [neighbors, setNeighbors] = useState([]);
-  const [subneighbors, setSubNeighbors] = useState([]);
-
-  const router = useRouter();
-  const { query } = router;
-
-  async function getNeighbors(query) {
-    try {
-      setApiLoading(true);
-      const response = (await neighborService.getNeighbors({ query, limit: 10, page: 1 })).data;
-      setNeighbors(response.neighbors);
-      setApiLoading(false);
-    } catch (err) {
-      setApiLoading(false);
-    }
-  }
-  useEffect(() => {
-    getNeighbors(query.query);
-  }, [query.query]);
-
-  const handleChooseNeighbor = async id => {
-    try {
-      setApiLoading(true);
-      const response = (await neighborService.getNeighbor({ query, id: id, limit: 10, page: 1 })).data;
-      setNeighbors(response.subneighbors);
-      setApiLoading(false);
-    } catch (err) {
-      setApiLoading(false);
-    }
-  };
-
-  async function getSubNeighbors(query) {
-    try {
-      setApiLoading(true);
-      const response = (await subNeighborService.getSubNeighbors({ query, limit: 10, page: 1 })).data;
-      setSubNeighbors(response.subneighbors);
-      setApiLoading(false);
-    } catch (err) {
-      setApiLoading(false);
-    }
-  }
-  useEffect(() => {
-    getSubNeighbors(query.query);
-  }, [query.query]);
-
-  const handleChooseSubNeighbor = async id => {
-    try {
-      setApiLoading(true);
-      const response = (await subNeighborService.getSubNeighbor({ query, id: id, limit: 10, page: 1 })).data;
-      setSubNeighbors(response.subneighbors);
-      setApiLoading(false);
-    } catch (err) {
-      setApiLoading(false);
-    }
-  };
-
+export default function Landing() {
   return (
     <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-16 pt-8 pb-32 py-8">
       <h3 className="text-2xl text-hint-nav">WGBH Dashboard</h3>
@@ -153,18 +91,9 @@ export default function Home() {
                     defaultValue="female"
                     name="radio-buttons-group"
                   >
-                    {subneighbors.length > 0 && (
-                      <>
-                        {subneighbors.map((subneighbor) => (
-                          <SubNbButton
-                            key={subneighbor._id}
-                            id={subneighbor._id}
-                            subnbname={subneighbor.subnbname}
-                            onChooseSubNeighbor={handleChooseSubNeighbor}
-                          />
-                        ))}
-                      </>
-                    )}
+                    <FormControlLabel value="SubNeighbor1" control={<Radio />} label="SubNeighbor1" />
+                    <FormControlLabel value="SubNeighbor2" control={<Radio />} label="SubNeighbor2" />
+                    <FormControlLabel value="SubNeighbor3" control={<Radio />} label="SubNeighbor3" />
                   </RadioGroup>
                 </FormControl>
               </Item>
@@ -202,6 +131,9 @@ export default function Home() {
         </Box>
 
       </div>
+
+
+
 
     </div >
   );
