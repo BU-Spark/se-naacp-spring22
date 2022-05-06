@@ -47,16 +47,6 @@ export default function SideNav() {
                   <UploadIcon isActive={router.asPath.startsWith('/upload')} />
                 </SideNavItem>
               </li>
-              <li>
-                <SideNavItem title="Compare" link="/compare" isActive={router.asPath.startsWith('/compare')}>
-                  <CompareIcon isActive={router.asPath.startsWith('/compare')} />
-                </SideNavItem>
-              </li>
-              <li>
-                <SideNavItem title="Database" link="/database" isActive={router.asPath.startsWith('/database')}>
-                  <DatabaseIcon isActive={router.asPath.startsWith('/database')} />
-                </SideNavItem>
-              </li>
             </>
           )}
         </ul>
