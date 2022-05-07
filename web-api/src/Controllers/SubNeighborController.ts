@@ -16,7 +16,6 @@ import errorMessages from '../utils/errorMessages';
 const { SubNeighbor } = models;
 
 type SubNeighborQuery = {
-    nbid: string;
     createdBy: string;
     nbname?: RegExp;
 };
@@ -24,11 +23,10 @@ type SubNeighborQuery = {
 class AuthController {
     static async getSubNeighbors(req: Request, res: Response) {
         const currentUser = req.user!;
-        const nbid = '6261b09c0fe72b265b49627e';
         logger.info('attempting to get SubNeighbors for user');
         const { limit, page } = getQueryOptions(req);
 
-        let query: SubNeighborQuery = { createdBy: currentUser.userId, nbid: nbid };
+        let query: SubNeighborQuery = { createdBy: currentUser.userId };
         const offset = (page - 1) * limit;
 
         if (req.query.q) {

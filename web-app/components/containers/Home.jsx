@@ -34,6 +34,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Home() {
   const [apiLoading, setApiLoading] = useState(false);
+  const [neighborId, setNeighborId] = useState('');
   const [neighbors, setNeighbors] = useState([]);
   const [subneighbors, setSubNeighbors] = useState([]);
 
@@ -57,8 +58,8 @@ export default function Home() {
   const handleChooseNeighbor = async id => {
     try {
       setApiLoading(true);
-      const response = (await neighborService.getNeighbor({ query, id: id, limit: 10, page: 1 })).data;
-      setNeighbors(response.subneighbors);
+      setNeighborId(id);
+      getSubNeighbors();
       setApiLoading(false);
     } catch (err) {
       setApiLoading(false);
@@ -69,7 +70,7 @@ export default function Home() {
     try {
       setApiLoading(true);
       const response = (await subNeighborService.getSubNeighbors({ query, limit: 10, page: 1 })).data;
-      setSubNeighbors(response.subneighbors);
+      setSubNeighbors(response.subneighbors.filter((subneighbor) => subneighbor.nbid === neighborId));
       setApiLoading(false);
     } catch (err) {
       setApiLoading(false);
@@ -147,7 +148,7 @@ export default function Home() {
               <Item>
 
                 <FormControl>
-                  <FormLabel id="demo-radio-buttons-group-label">Sub-Neighborhoods in Downtown</FormLabel>
+                  <FormLabel id="demo-radio-buttons-group-label">Sub-Neighborhoods</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
                     defaultValue="female"
@@ -192,6 +193,7 @@ export default function Home() {
               <Item>
                 <div className="h-3 w-3 inline">
                   <PieChartRace />
+                  <PieChartGender />
                 </div>
                 <div className="h-3 w-3 inline">
                   <PieChartGender />
